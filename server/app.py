@@ -1,9 +1,11 @@
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
+from flask_cors import CORS
 import json
 import random
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 person = {
@@ -22,20 +24,6 @@ person = {
 }
 
 tasks = {
-    '1': {
-        'name': 'tache 1',
-        'weight': {
-            'duty fulfiller':3,
-            'mechanic':1
-        }
-    },
-    '2': {
-        'name': 'tache 2',
-                'weight': {
-            'duty fulfiller':1,
-            'mechanic':4
-        }
-    }
 }
 
 asignTask = []
@@ -75,9 +63,9 @@ class Persons(Resource):
         return person
 
     def post(self):
-        json_data = request.get_json(force=True)
+        json_data = request.get_json()
+        print(json_data)
         p = {'name':json_data['name'], 'perso': json_data['perso'], 'tasks': [],'count':0}
-        print(max(person.keys(),key=int))
         person_id = int(max(person.keys(),key=int))+1
         person[person_id] = p
         RecordMessage("Added person " + p['name'])
@@ -129,7 +117,7 @@ def ReadTask():
                     taskName=word
                 else:
                     weight[personality[index-1]]=int(word) 
-            task={'task_name':taskName,'weights':weight}
+            task={'name':taskName,'weight':weight}
             tasks[idx1]=task
 
 api.add_resource(Persons, '/persons')
@@ -138,8 +126,10 @@ api.add_resource(OnePerson, '/persons/<person_id>')
 api.add_resource(OneTask, '/persons/<person_id>/next')
 api.add_resource(Governement,'/gov')
 
-if __name__ == '__main__':
-    ReadTask()
-    app.run(host='0.0.0.0',port=5002, debug=True)
+ReadTask()
 
+
+if __name__ == '__main__':    
+    app.run(host='0.0.0.0',port=5002, debug=True)
+    
 
