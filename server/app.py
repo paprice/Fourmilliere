@@ -118,6 +118,7 @@ class Governement(Resource):
         return msg
 
 def ReadTask():
+    personality=["duty fullfiller","mechanic","nurturer","thinker","scientist"]    
     with open("task.csv","r") as filestream:
         for idx1,line in enumerate(filestream):        
             currentline=line.split(",")
