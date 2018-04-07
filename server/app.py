@@ -6,18 +6,16 @@ import random
 app = Flask(__name__)
 api = Api(app)
 
-parser = reqparse.RequestParser()
-
 person = {
     '1': {
         'name':"Itch",
-        'perso': "Enginering",
+        'perso': "mechanic",
         'tasks': [],
         'count': 0
     },
     '2': {
         'name':"Bob",
-        'perso': 'Doctor',
+        'perso': 'duty fulfiller',
         'tasks': [],
         'count': 0
     }
@@ -26,11 +24,17 @@ person = {
 tasks = {
     '1': {
         'name': 'tache 1',
-        'price': 450
+        'weight': {
+            'duty fulfiller':3,
+            'mechanic':1
+        }
     },
     '2': {
         'name': 'tache 2',
-        'price': 300
+                'weight': {
+            'duty fulfiller':1,
+            'mechanic':4
+        }
     }
 }
 
@@ -50,16 +54,19 @@ def RecordMessage(msg):
     nbr = int(max(messages.keys(),key=int))+1
     messages[str(nbr)] = {'message':msg}
 
-def GetRandomTask():
+def GetNextTask(perso):
     nbMax = int(max(tasks.keys(),key=int))
     if(len(asignTask) < nbMax):
-        ran = random.randint(1, nbMax)
-        task = tasks[str(ran)]
-        while(ran in asignTask):
-            ran = random.randint(1, nbMax)
-            task = tasks[str(ran)]
-        asignTask.append(ran)
-        return task
+        finalTask = {'name':"",'weight':{}}
+        finalTask['weight'][perso] = 0
+        for item in tasks:
+            task = tasks[item]
+            if(item not in asignTask):
+                if(task['weight'][perso] > finalTask['weight'][perso]):
+                    finalTask = task
+                    idTask = item
+        asignTask.append(idTask)
+        return finalTask
     else:
         return None
 
@@ -98,9 +105,10 @@ class OnePerson(Resource):
         return person[person_id]
 
 class OneTask(Resource):
-    def get(self):
-        task = GetRandomTask()
-        RecordMessage("Task " + task['name'] + " has been give")
+    def get(self, person_id):
+        task = GetNextTask(person[person_id]['perso'])
+        if(task != None):
+            RecordMessage("Task " + task['name'] + " has been give to " + person[person_id]['name'])
         return task
 
 class Governement(Resource):
@@ -112,7 +120,7 @@ class Governement(Resource):
 api.add_resource(Persons, '/persons')
 api.add_resource(Tasks, '/tasks')
 api.add_resource(OnePerson, '/persons/<person_id>')
-api.add_resource(OneTask, '/tasks/next')
+api.add_resource(OneTask, '/persons/<person_id>/next')
 api.add_resource(Governement,'/gov')
 
 if __name__ == '__main__':
