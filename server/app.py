@@ -63,7 +63,8 @@ class Persons(Resource):
         return person
 
     def post(self):
-        json_data = request.get_json()
+        print("Inside post method")
+        json_data = request.get_json(force=True)
         print(json_data)
         p = {'name':json_data['name'], 'perso': json_data['perso'], 'tasks': [],'count':0}
         person_id = int(max(person.keys(),key=int))+1
