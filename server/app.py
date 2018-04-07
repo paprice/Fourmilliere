@@ -41,11 +41,10 @@ messages = {
         'message':"Server start"}
 }
 
-#def ClearMessages():
-#    nbr = int(max(messages.keys()))
-#    lastMsg = messages[str(nbr)]
-#    messages.clear()
-#    messages['1'] = lastMsg
+def FindId(name):
+    for item in tasks:
+        if(tasks[item]['name'] == name):
+            return item
 
 def RecordMessage(msg):
     nbr = int(max(messages.keys(),key=int))+1
@@ -91,8 +90,8 @@ class OnePerson(Resource):
         p['count'] = p['count']+1
         ptask = p['tasks']
         task_id = p['count']
-        idFinish = int(json_data['id'])
-        asignTask.remove(idFinish)
+        idFinish = FindId(json_data['name'])
+        asignTask.remove(int(idFinish))
         comp = {str(task_id): tasks[str(idFinish)]}
         ptask.append(comp)
         RecordMessage("Task " +  tasks[str(idFinish)]['name'] + " has been finished by " + p['name'])
