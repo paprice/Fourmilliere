@@ -76,7 +76,7 @@ class Persons(Resource):
 
     def post(self):
         json_data = request.get_json(force=True)
-        p = {'name':json_data['name'], 'perso': json_data['perso'], 'tasks': json_data['tasks'],'count':0}
+        p = {'name':json_data['name'], 'perso': json_data['perso'], 'tasks': [],'count':0}
         print(max(person.keys(),key=int))
         person_id = int(max(person.keys(),key=int))+1
         person[person_id] = p
@@ -139,6 +139,7 @@ api.add_resource(OneTask, '/persons/<person_id>/next')
 api.add_resource(Governement,'/gov')
 
 if __name__ == '__main__':
+    ReadTask()
     app.run(host='0.0.0.0',port=5002, debug=True)
 
 
