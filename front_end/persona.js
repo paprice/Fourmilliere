@@ -3,6 +3,8 @@ random = Math.floor((Math.random() * 5) + 1);
 
 personas = ['duty_fullfiller', 'mechanic', 'nurturer', 'thinker', 'scientist'];
 
+address = "http://localhost:5002"
+
 ID = -1;
 
 total_coins = 0;
@@ -13,7 +15,7 @@ function load_random_persona(){
     document.getElementById('persona').innerHTML = 'Yay you are an ' + persona + '!';
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://172.20.34.161:5002/persons", true);
+    xhr.open("POST", address + "/persons", true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onload = function (e) {
         if (xhr.readyState === 4) {
@@ -38,7 +40,7 @@ function get_tasks(){
     }
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://172.20.34.161:5002/persons/"+ID+"/next", true);
+    xhr.open("GET", address + "/persons/"+ID+"/next", true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onload = function (e) {
         if (xhr.readyState === 4) {
@@ -64,12 +66,12 @@ function get_tasks(){
 function send_tasks(){
     
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://172.20.34.161:5002/persons/"+ID, true);
+    xhr.open("POST", address + "/persons/"+ID, true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onload = function (e) {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-                ID = xhr.responseText;
+                //ID = xhr.responseText;
                 total_coins += last_weight;
                 alert('Congratulations ! Your current challenge coins balance is ' + total_coins);
                 document.getElementById('tasks').innerHTML = '<button onclick="get_tasks()">Get Tasks !</button>';
