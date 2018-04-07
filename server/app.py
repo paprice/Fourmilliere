@@ -138,6 +138,7 @@ api.add_resource(OneTask, '/persons/<person_id>/next')
 api.add_resource(Governement,'/gov')
 
 if __name__ == '__main__':
+    ReadTask()
     app.run(host='0.0.0.0',port=5002, debug=True)
 
 
