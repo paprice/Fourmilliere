@@ -8,23 +8,33 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
+taskMax = 3
+taskPool = 6
+
+
 person = {
     '1': {
         'name':"Itch",
         'perso': "mechanic",
         'tasks': [],
-        'count': 0
+        'count': 0,
+        'coin':0,
+        'taskDone':0
     },
     '2': {
         'name':"Bob",
-        'perso': 'duty fulfiller',
+        'perso': 'duty fullfiller',
         'tasks': [],
-        'count': 0
+        'count': 0,
+        'coin':0,
+        'taskDone':0
     }
 }
 
 tasks = {
 }
+
+selectedTask = {}
 
 asignTask = []
 
@@ -47,8 +57,8 @@ def GetNextTask(perso):
     if(len(asignTask) < nbMax):
         finalTask = {'name':"",'weight':{}}
         finalTask['weight'][perso] = 0
-        for item in tasks:
-            task = tasks[item]
+        for item in selectedTask:
+            task = selectedTask[item]
             if(item not in asignTask):
                 if(task['weight'][perso] > finalTask['weight'][perso]):
                     finalTask = task
@@ -63,14 +73,12 @@ class Persons(Resource):
         return person
 
     def post(self):
-        print("Inside post method")
         json_data = request.get_json(force=True)
-        print(json_data)
-        p = {'name':json_data['name'], 'perso': json_data['perso'], 'tasks': [],'count':0}
+        p = {'name':json_data['name'], 'perso': json_data['perso'], 'tasks': [],'count':0,'coin':0,'taskDone':0}
         person_id = int(max(person.keys(),key=int))+1
-        person[person_id] = p
+        person[str(person_id)] = p
         RecordMessage("Added person " + p['name'])
-        return person[person_id]
+        return person_id
 
 class Tasks(Resource):
     def get(self):
@@ -88,17 +96,31 @@ class OnePerson(Resource):
         task_id = p['count']
         idFinish = FindId(json_data['name'])
         asignTask.remove(int(idFinish))
-        comp = {str(task_id): tasks[str(idFinish)]}
+        comp = {str(task_id): tasks[idFinish]}
         ptask.append(comp)
-        RecordMessage("Task " +  tasks[str(idFinish)]['name'] + " has been finished by " + p['name'])
+        RecordMessage("Task " +  tasks[idFinish]['name'] + " has been finished by " + p['name'])
         return person[person_id]
 
 class OneTask(Resource):
     def get(self, person_id):
-        task = GetNextTask(person[person_id]['perso'])
-        if(task != None):
-            RecordMessage("Task " + task['name'] + " has been give to " + person[person_id]['name'])
-        return task
+        print(person_id)
+        if(person[person_id]['taskDone'] < taskMax):
+            task = GetNextTask(person[str(person_id)]['perso'])
+            if(task != None):
+                RecordMessage("Task " + task['name'] + " has been give to " + person[person_id]['name'])
+            if(task != None):     
+                person[person_id]['taskDone'] = person[person_id]['taskDone'] +1   
+                retTask = {'name': task['name'], 'weight': 6-task['weight'][person[person_id]['perso']]}
+                return retTask
+            else:
+                return {'name':"Do nothing", 'weight':0}
+        else:
+            tasks.clear()
+            asignTask.clear()
+            selectedTask.clear()
+            person[person_id]['taskDone'] = 0
+            ReadTask()
+            return {'name':"Go to sleep", 'weight':0}
 
 class Governement(Resource):
     def get(self):
@@ -107,7 +129,7 @@ class Governement(Resource):
         return msg
 
 def ReadTask():
-    personality=["duty fullfiller","mechanic","nurturer","thinker","scientist"]    
+    personality=["duty_fullfiller","mechanic","nurturer","thinker","scientist"]    
     with open("task.csv","r") as filestream:
         for idx1,line in enumerate(filestream):        
             currentline=line.split(",")
@@ -120,6 +142,17 @@ def ReadTask():
                     weight[personality[index-1]]=int(word) 
             task={'name':taskName,'weight':weight}
             tasks[idx1]=task
+    RandomSixTask()
+    
+
+def RandomSixTask():
+    nbMax = int(max(tasks.keys(),key=int))
+    for i in range(6):
+        ran = random.randint(1,nbMax)
+        print(str(ran))
+        if(ran not in selectedTask.keys()):
+            task = tasks[ran]
+            selectedTask[str(i)] = task
 
 api.add_resource(Persons, '/persons')
 api.add_resource(Tasks, '/tasks')
