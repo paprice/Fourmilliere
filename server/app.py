@@ -117,6 +117,20 @@ class Governement(Resource):
        # ClearMessages()
         return msg
 
+def ReadTask():
+    with open("task.csv","r") as filestream:
+        for idx1,line in enumerate(filestream):        
+            currentline=line.split(",")
+            weight={}
+            for index, word in enumerate(currentline):
+                word=word.rstrip()
+                if(index==0):
+                    taskName=word
+                else:
+                    weight[personality[index-1]]=int(word) 
+            task={'task_name':taskName,'weights':weight}
+            tasks[idx1]=task
+
 api.add_resource(Persons, '/persons')
 api.add_resource(Tasks, '/tasks')
 api.add_resource(OnePerson, '/persons/<person_id>')
@@ -125,3 +139,5 @@ api.add_resource(Governement,'/gov')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=5002, debug=True)
+
+
