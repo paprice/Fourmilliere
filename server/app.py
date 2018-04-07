@@ -94,11 +94,13 @@ class OnePerson(Resource):
         p['count'] = p['count']+1
         ptask = p['tasks']
         task_id = p['count']
-        idFinish = FindId(json_data['name'])
-        comp = {str(task_id): tasks[idFinish]}
-        ptask.append(comp)
-        RecordMessage("Task " + tasks[idFinish]['name'] +
-                      " has been finished by " + p['name'])
+        name = json_data['name']
+        if(name != "Go to sleep"):
+            idFinish = FindId(name)
+            comp = {str(task_id): tasks[idFinish]}
+            ptask.append(comp)
+            RecordMessage("Task " + tasks[idFinish]['name'] +
+                        " has been finished by " + p['name'])
         return person[person_id]
 
 
