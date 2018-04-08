@@ -33,17 +33,34 @@
 
 <body onload="StartTimer()">
     <script src="index.js"></script>
-    <div class="w3-row w3-padding-64">
+    <div class="w3-padding-64">
         <div class="w3-container">
-            <h1 class="w3-text-teal">What happens in the colony</h1>
+            <h1 class="w3-text-teal">Colony</h1>
+        </div>
+        <div class="w3-row w3-padding-64">
+            <div class="w3-twothird w3-container">
+                <h2 class="w3-text-teal">Colonists</h2>
+                <button onclick="GetColonists()">Show colonists</button>
+                <p id="colonists"></p>
+
+            </div>
+            <div class="w3-third w3-container">
+                <h2 class="w3-text-teal">Tasks</h2>
+                <button onclick="GetTasks()">Show tasks</button>
+                <p id="tasks"></p>
+
+
+            </div>
         </div>
     </div>
     <div class="w3-row w3-padding-64">
         <div class="w3-twothird w3-container">
+            <h2 class="w3-text-teal">Messages from server</h2>
             <button onclick="GetMessages()">Get new messages</button>
             <p id='record'></p>
         </div>
-        <div  class="w3-third w3-container">
+        <div class="w3-third w3-container">
+            <h2 class="w3-text-teal">New day</h2>
             <button onclick="ResetTasks()">New day</button>
         </div>
     </div>
