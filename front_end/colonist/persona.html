@@ -31,45 +31,39 @@
     </style>
 </head>
 
-<body onload="load_random_persona()">
+<body>
 
-    <div class="w3-row w3-padding-64">
-        <div class="w3-third w3-container">
-            <h1 class="w3-text-teal">Personnality</h1>
-            <p id='persona'></p>
-        </div>
-        <div class="w3-third w3-container">
-            <h3 class="w3-text-teal">Challenge coin</h3>
-            <p id="challengeCoin">You have currently 0 challenge coin in your possession</p>
-        </div>
+    <div id='askName' class="w3-row w3-padding-64  w3-container">
+        <h1 class="w3-text-teal">Please enter your name</h1>
+        <input type="text" id='nameInput'/>
+        <button onclick="load_random_persona()">Start</button>
     </div>
-
-
-
-    <div class="w3-row w3-padding-64">
-        <div class="w3-third w3-container">
-            <h1 class="w3-text-teal">Tasks</h1>
-            <div id='tasks'>
+    <div id='nameRegister' style="display: none">
+        <div class="w3-row w3-padding-64">
+            <div class="w3-third w3-container">
+                <h1 class="w3-text-teal">Personnality</h1>
+                <p id='persona'></p>
             </div>
-            <button onclick="send_tasks()" id="completeTask" style="display: none">Complete a task !</button>
-            <button onclick="get_tasks()" id="getTask">Get Tasks !</button>
-            <script src='persona.js'></script>
+            <div class="w3-third w3-container">
+                <h3 class="w3-text-teal">Challenge coin</h3>
+                <p id="challengeCoin">You have currently 0 challenge coin in your possession</p>
+            </div>
         </div>
-        <div class="w3-third w3-container">
-            <h3 class="w3-text-teal">Tasks done</h3>
-            <p id="taskDone"></p>
+
+        <div class="w3-row w3-padding-64">
+            <div class="w3-third w3-container">
+                <h1 class="w3-text-teal">Tasks</h1>
+                <div id='tasks'>
+                </div>
+                <button onclick="send_tasks()" id="completeTask" style="display: none">Complete a task !</button>
+                <button onclick="get_tasks()" id="getTask">Get Tasks !</button>
+                <script src='persona.js'></script>
+            </div>
+            <div class="w3-third w3-container">
+                <h3 class="w3-text-teal">Tasks done</h3>
+                <p id="taskDone"></p>
+            </div>
         </div>
-    </div>
-
-
-    <div class="container">
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-
-
-
     </div>
 </body>
 

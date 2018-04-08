@@ -31,8 +31,22 @@
     </style>
 </head>
 
-<body>
-
+<body onload="StartTimer()">
+    <script src="index.js"></script>
+    <div class="w3-row w3-padding-64">
+        <div class="w3-container">
+            <h1 class="w3-text-teal">What happens in the colony</h1>
+        </div>
+    </div>
+    <div class="w3-row w3-padding-64">
+        <div class="w3-twothird w3-container">
+            <button onclick="GetMessages()">Get new messages</button>
+            <p id='record'></p>
+        </div>
+        <div  class="w3-third w3-container">
+            <button onclick="ResetTasks()">New day</button>
+        </div>
+    </div>
 </body>
 
 </html>

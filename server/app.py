@@ -36,7 +36,10 @@ tasks = {
 
 selectedTask = {}
 
-messages = []
+messages = {
+    'count':0,
+    'msg':[]
+}
 
 
 def FindId(name):
@@ -46,7 +49,8 @@ def FindId(name):
 
 
 def RecordMessage(msg):
-    messages.append({'message': msg})
+    messages['count'] = messages['count']+1
+    messages['msg'].append({'message': msg})
 
 
 def GetNextTask(perso):
@@ -80,6 +84,12 @@ class Persons(Resource):
 class Tasks(Resource):
     def get(self):
         return tasks
+    def post(self):
+        tasks.clear()
+        selectedTask.clear()
+        ReadTask()
+        RecordMessage("New day started. Tasks have been reset")
+        return "Tasks have been reset"
 
 
 class OnePerson(Resource):
@@ -131,9 +141,11 @@ class OneTask(Resource):
 
 class Governement(Resource):
     def get(self):
-        msg = messages
-        messages.clear()
-        return msg
+        return messages
+    def post(self):
+        messages['msg'].clear()
+        messages['count'] = 0
+        return messages
 
 
 def ReadTask():
