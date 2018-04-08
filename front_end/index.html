@@ -1,49 +1,97 @@
-<html>
-    <body>
-        <h1>Welcome to the space colony registry system.</h1>
-        <h2>Please tell me who you are ?</h2>
-        <div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Fourmilliere</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            html,
+            body,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-family: "Roboto", sans-serif;
+            }
+    
+            .w3-sidebar {
+                z-index: 3;
+                width: 250px;
+                top: 43px;
+                bottom: 0;
+                height: inherit;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="w3-main"></div>
+        <h1 class="w3-container w3-text-teal">Welcome to the space colony registry system.</h1>
+        <h2 class="w3-container w3-text-teal">Please tell me who you are ?</h2>
+        <div class="w3-container w3-border">
             <form>
                 <p>You find it easy to stay relaxed even when there is some pressure.</p>
-                <input type="radio" name="q1" value="male" checked>Agree<br>
-                <input type="radio" name="q1" value="female">Neutral<br>
-                <input type="radio" name="q1" value="other">Disagree  
-            </form> 
+                <input type="radio" name="q1" value="male" checked>Agree
+                <br>
+                <input type="radio" name="q1" value="female">Neutral
+                <br>
+                <input type="radio" name="q1" value="other">Disagree
+            </form>
+            <br/>
         </div>
-        <div>
+        <div class="w3-container">
             <form>
                 <p>You consider yourself more practical than creative.</p>
-                <input type="radio" name="q2" value="male" checked>Agree<br>
-                <input type="radio" name="q2" value="female">Neutral<br>
-                <input type="radio" name="q2" value="other">Disagree  
-            </form> 
+                <input type="radio" name="q2" value="male" checked>Agree
+                <br>
+                <input type="radio" name="q2" value="female">Neutral
+                <br>
+                <input type="radio" name="q2" value="other">Disagree
+            </form>
+            <br/>
         </div>
-        <div>
+        <div class="w3-container w3-border">
             <form>
                 <p>Your mood can change very quickly.</p>
-                <input type="radio" name="q3" value="male" checked>Agree<br>
-                <input type="radio" name="q3" value="female">Neutral<br>
-                <input type="radio" name="q3" value="other">Disagree  
-            </form> 
-        </div>
-        <div>
-            <form>
-                <p>When you sleep, your dreams tend to focus on the real world and its events.</p>
-                <input type="radio" name="q3" value="male" checked>Agree<br>
-                <input type="radio" name="q3" value="female">Neutral<br>
-                <input type="radio" name="q3" value="other">Disagree  
-            </form>
-        </div>
-
-        <div>
-            <form>
-                <p>You often spend time exploring unrealistic and impractical yet intriguing ideas.</p>
-                <input type="radio" name="q3" value="male" checked>Agree<br>
-                <input type="radio" name="q3" value="female">Neutral<br>
+                <input type="radio" name="q3" value="male" checked>Agree
+                <br>
+                <input type="radio" name="q3" value="female">Neutral
+                <br>
                 <input type="radio" name="q3" value="other">Disagree
             </form>
+            <br/>
+        </div>
+        <div class="w3-container">
+            <form>
+                <p>When you sleep, your dreams tend to focus on the real world and its events.</p>
+                <input type="radio" name="q3" value="male" checked>Agree
+                <br>
+                <input type="radio" name="q3" value="female">Neutral
+                <br>
+                <input type="radio" name="q3" value="other">Disagree
+            </form>
+            <br/>
+        </div>
+        <div class="w3-container w3-border">
+            <form>
+                <p>You often spend time exploring unrealistic and impractical yet intriguing ideas.</p>
+                <input type="radio" name="q3" value="male" checked>Agree
+                <br>
+                <input type="radio" name="q3" value="female">Neutral
+                <br>
+                <input type="radio" name="q3" value="other">Disagree
+            </form>
+            <br/>
         </div>
         <button id="submit" onclick="submit_persona()">Register</button>
-    <script src="script.js"></script>
-    </body>
+        <script src="script.js"></script>
+    </div>
+</body>
+
 </html>

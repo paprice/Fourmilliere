@@ -56,12 +56,14 @@ def RecordMessage(msg):
 def GetNextTask(perso):
     finalTask = {'name': "", 'weight': {}}
     finalTask['weight'][perso] = 0
+    idTask = None
     for item in selectedTask:
         task = selectedTask[item]
         if(task['weight'][perso] > finalTask['weight'][perso]):
             finalTask = task
             idTask = item
-    del selectedTask[idTask]
+    if(idTask != None):
+        del selectedTask[idTask]
     return finalTask
 
 
@@ -95,12 +97,14 @@ class OnePerson(Resource):
         ptask = p['tasks']
         task_id = p['count']
         name = json_data['name']
-        if(name != "Go to sleep"):
+        if(name != "Go to sleep" and name != "Do nothing"):
             idFinish = FindId(name)
             comp = {str(task_id): tasks[idFinish]}
+            coin = 6 - tasks[idFinish]['weight'][person[person_id]['perso']]
+            person[person_id]['coin'] += coin
             ptask.append(comp)
             RecordMessage("Task " + tasks[idFinish]['name'] +
-                        " has been finished by " + p['name'])
+                          " has been finished by " + p['name'])
         return person[person_id]
 
 
@@ -108,15 +112,18 @@ class OneTask(Resource):
     def get(self, person_id):
         if(person[person_id]['taskDone'] < taskMax):
             task = GetNextTask(person[str(person_id)]['perso'])
-            if(task != None):
-                RecordMessage(
-                    "Task " + task['name'] + " has been give to " + person[person_id]['name'])
-            if(task != None):
+            if(task['name'] != ""):
                 person[person_id]['taskDone'] = person[person_id]['taskDone'] + 1
                 retTask = {'name': task['name'], 'weight': 6 -
                            task['weight'][person[person_id]['perso']]}
+                RecordMessage(
+                    "Task " + task['name'] + " has been give to " + person[person_id]['name'])
                 return retTask
             else:
+                tasks.clear()
+                selectedTask.clear()
+                person[person_id]['taskDone'] = 0
+                ReadTask()
                 return {'name': "Do nothing", 'weight': 0}
         else:
             tasks.clear()
