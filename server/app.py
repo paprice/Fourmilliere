@@ -37,8 +37,8 @@ tasks = {
 selectedTask = {}
 
 messages = {
-    'count':0,
-    'msg':[]
+    'count': 0,
+    'msg': []
 }
 
 
@@ -84,6 +84,7 @@ class Persons(Resource):
 class Tasks(Resource):
     def get(self):
         return tasks
+
     def post(self):
         tasks.clear()
         selectedTask.clear()
@@ -126,10 +127,7 @@ class OneTask(Resource):
                     "Task " + task['name'] + " has been give to " + person[person_id]['name'])
                 return retTask
             else:
-                tasks.clear()
-                selectedTask.clear()
-                person[person_id]['taskDone'] = 0
-                ReadTask()
+                person[person_id]['taskDone'] = person[person_id]['taskDone'] + 1
                 return {'name': "Do nothing", 'weight': 0}
         else:
             tasks.clear()
