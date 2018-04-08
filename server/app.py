@@ -36,10 +36,7 @@ tasks = {
 
 selectedTask = {}
 
-messages = {
-    '1': {
-        'message': "Server start"}
-}
+messages = []
 
 
 def FindId(name):
@@ -49,8 +46,7 @@ def FindId(name):
 
 
 def RecordMessage(msg):
-    nbr = int(max(messages.keys(), key=int))+1
-    messages[str(nbr)] = {'message': msg}
+    messages.append({'message': msg})
 
 
 def GetNextTask(perso):
