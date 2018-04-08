@@ -1,14 +1,76 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
-    <body onload="load_random_persona()">
-        <div id='persona'>
+<head>
+    <title>Fourmilliere</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        html,
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Roboto", sans-serif;
+        }
 
+        .w3-sidebar {
+            z-index: 3;
+            width: 250px;
+            top: 43px;
+            bottom: 0;
+            height: inherit;
+        }
+    </style>
+</head>
+
+<body onload="load_random_persona()">
+
+    <div class="w3-row w3-padding-64">
+        <div class="w3-third w3-container">
+            <h1 class="w3-text-teal">Personnality</h1>
+            <p id='persona'></p>
         </div>
-        <div id='tasks'>
-            <button onclick="get_tasks()">Get Tasks !</button>
+        <div class="w3-third w3-container">
+            <h3 class="w3-text-teal">Challenge coin</h3>
+            <p id="challengeCoin">You have currently 0 challenge coin in your possession</p>
         </div>
-        
-    <script src='persona.js'></script>
-    </body>
+    </div>
+
+
+
+    <div class="w3-row w3-padding-64">
+        <div class="w3-third w3-container">
+            <h1 class="w3-text-teal">Tasks</h1>
+            <div id='tasks'>
+            </div>
+            <button onclick="send_tasks()" id="completeTask" style="display: none">Complete a task !</button>
+            <button onclick="get_tasks()" id="getTask">Get Tasks !</button>
+            <script src='persona.js'></script>
+        </div>
+        <div class="w3-third w3-container">
+            <h3 class="w3-text-teal">Tasks done</h3>
+            <p id="taskDone"></p>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+
+
+
+    </div>
+</body>
 
 </html>

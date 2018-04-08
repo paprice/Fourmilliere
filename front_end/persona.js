@@ -12,7 +12,7 @@ last_weight = 0;
 
 function load_random_persona(){
     persona = personas[random - 1];
-    document.getElementById('persona').innerHTML = 'Yay you are an ' + persona + '!';
+    document.getElementById('persona').innerHTML = 'Your AI have determined that you are a <font color="red">' + persona + '</font>!';
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", address + "/persons", true);
@@ -48,9 +48,12 @@ function get_tasks(){
                 tasks = JSON.parse(xhr.responseText);
                 last_weight = tasks['weight'];
                 last_task = tasks['name']
-                document.getElementById('tasks').innerHTML = '<p>You have to : ' + tasks['name'] + '</p>';
-                document.getElementById('tasks').innerHTML += '<p>By doing doing this, you would gain ' + tasks['weight'] + ' challenge coins.'
-                document.getElementById('tasks').innerHTML += '<button onclick="send_tasks()">Complete a task !</button>';
+                document.getElementById('tasks').innerHTML = '<p>You have to : <font color="red">' + tasks['name'] + '</font></p>';
+                document.getElementById('tasks').innerHTML += '<p>By doing doing this, you would gain ' + tasks['weight'] + ' challenge coins.';
+                document.getElementById('completeTask').style.display = "block";
+                document.getElementById('getTask').style.display = "none";
+
+                //document.getElementById('tasks').innerHTML += '';
             } else {
                 console.error(xhr.statusText);
             }
@@ -71,10 +74,19 @@ function send_tasks(){
     xhr.onload = function (e) {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
+                ret = JSON.parse(xhr.responseText);
+                coin = ret['coin']
+                //alert(coin)
                 //ID = xhr.responseText;
-                total_coins += last_weight;
-                alert('Congratulations ! Your current challenge coins balance is ' + total_coins);
-                document.getElementById('tasks').innerHTML = '<button onclick="get_tasks()">Get Tasks !</button>';
+                //total_coins += last_weight;
+               // alert('Congratulations ! Your current challenge coins balance is ' + coin);
+                document.getElementById('challengeCoin').innerHTML = "You have currently " + coin + " challenge coin in your possession"
+                document.getElementById('completeTask').style.display = "none";
+                document.getElementById('getTask').style.display = "block";
+                document.getElementById('tasks').innerHTML = ''
+                
+                document.getElementById('taskDone').innerHTML +=  last_task+"<br/>"
+               // document.getElementById('tasks').innerHTML = '<button onclick="get_tasks()">Get Tasks !</button>';
             } else {
                 console.error(xhr.statusText);
             }
