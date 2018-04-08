@@ -1,4 +1,4 @@
 
 function submit_persona(){
-    window.location = 'persona.html'
+    window.location = 'test/persona.html'
 }
