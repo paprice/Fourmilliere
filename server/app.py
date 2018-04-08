@@ -132,7 +132,7 @@ class OneTask(Resource):
 class Governement(Resource):
     def get(self):
         msg = messages
-       # ClearMessages()
+        messages.clear()
         return msg
 
 
