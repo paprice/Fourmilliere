@@ -1,8 +1,35 @@
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
+from threading import Timer
 import json
 import random
+
+class RepeatedTimer(object):
+    def __init__(self, interval, function, *args, **kwargs):
+        self._timer     = None
+        self.interval   = interval
+        self.function   = function
+        self.args       = args
+        self.kwargs     = kwargs
+        self.is_running = False
+        self.start()
+
+    def _run(self):
+        self.is_running = False
+        self.start()
+        self.function(*self.args, **self.kwargs)
+
+    def start(self):
+        if not self.is_running:
+            self._timer = Timer(self.interval, self._run)
+            self._timer.start()
+            self.is_running = True
+
+    def stop(self):
+        self._timer.cancel()
+        self.is_running = False
+
 
 app = Flask(__name__)
 CORS(app)
@@ -10,7 +37,7 @@ api = Api(app)
 
 taskMax = 3
 taskPool = 6
-
+dayNb = 1
 
 person = {
     '1': {
@@ -174,6 +201,9 @@ def RandomSixTask():
             selectedTask[ran] = task
             find = find + 1
 
+def DayRestart():
+    dayNb = 1
+
 
 api.add_resource(Persons, '/persons')
 api.add_resource(Tasks, '/tasks')
@@ -182,7 +212,6 @@ api.add_resource(OneTask, '/persons/<person_id>/next')
 api.add_resource(Governement, '/gov')
 
 ReadTask()
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5002, debug=True)

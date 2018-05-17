@@ -2,7 +2,7 @@ random = Math.floor((Math.random() * 5) + 1);
 
 personas = ['duty_fullfiller', 'mechanic', 'nurturer', 'thinker', 'scientist'];
 
-address = "http://localhost:5002"
+address = "http://server:5002"
 
 ID = -1;
 

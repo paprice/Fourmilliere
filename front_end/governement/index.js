@@ -1,4 +1,4 @@
-address = "http://localhost:5002"
+address = "http://server:5002"
 
 var myVar;
 
