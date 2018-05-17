@@ -37,7 +37,6 @@ api = Api(app)
 
 taskMax = 3
 taskPool = 6
-dayNb = 1
 
 person = {
     '1': {
@@ -200,10 +199,6 @@ def RandomSixTask():
             task = tasks[ran]
             selectedTask[ran] = task
             find = find + 1
-
-def DayRestart():
-    dayNb = 1
-
 
 api.add_resource(Persons, '/persons')
 api.add_resource(Tasks, '/tasks')
